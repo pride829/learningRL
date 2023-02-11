@@ -219,6 +219,7 @@ class Player:
             self.estimations[state] += self.step_size * td_error
 
     # choose an action based on the state
+    # This return a action, what is a action?
     def act(self):
         state = self.states[-1]
         next_states = []
@@ -230,6 +231,7 @@ class Player:
                     next_states.append(state.next_state(
                         i, j, self.symbol).hash())
 
+        # Is this append a random action?
         if np.random.rand() < self.epsilon:
             action = next_positions[np.random.randint(len(next_positions))]
             action.append(self.symbol)
@@ -291,7 +293,7 @@ def train(epochs, print_every_n=500):
     player1_win = 0.0
     player2_win = 0.0
     for i in range(1, epochs + 1):
-        winner = judger.play(print_state=False)
+        winner = judger.play(print_state=True)
         if winner == 1:
             player1_win += 1
         if winner == -1:
